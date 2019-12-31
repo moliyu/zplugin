@@ -1,0 +1,44 @@
+{
+  "id": "1503756",
+  "name": "z-icon",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1108483",
+      "name": "icon-prev",
+      "font_class": "next",
+      "unicode": "e635",
+      "unicode_decimal": 58933
+    },
+    {
+      "icon_id": "2823218",
+      "name": "unselect",
+      "font_class": "unselect",
+      "unicode": "e689",
+      "unicode_decimal": 59017
+    },
+    {
+      "icon_id": "7097506",
+      "name": "Selection Control - ",
+      "font_class": "select",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "8819774",
+      "name": "icon-prev",
+      "font_class": "prev",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "11474197",
+      "name": "arrow-down",
+      "font_class": "arrow-down",
+      "unicode": "e6eb",
+      "unicode_decimal": 59115
+    }
+  ]
+}
