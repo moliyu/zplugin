@@ -1,11 +1,12 @@
 <template>
     <div class="zcalenda">
         <div class="pick">
+            <i class="iconfont icon-doubleleft" @click="handleYear(-1)"></i>
             <i class="iconfont icon-prev" @click="handleMonth(-1)"></i>
-            {{year}}{{MonthList[month-1]}}
+            {{year}}年{{MonthList[month-1]}}月
             <i class="iconfont icon-next" @click="handleMonth(1)"></i>
+            <i class="iconfont icon-doubleright" @click="handleYear(1)"></i>
             <!-- {{getFirstdayWeek()}} -->
-            {{getLastDay()}}
         </div>
         <div class="head">
             <div class="week" v-for="(item, i) in weekList" :key="i">{{item}}</div>
@@ -14,7 +15,9 @@
             <div class="day" 
             v-for="(item, j) in dayList" :key="j" 
             >
-                <div :class="select.year==item.year&&select.month==item.month&&select.day==item.day&&'select'" @click="handleDay(item)">{{item.day}}</div>
+                <div class="item" 
+                :class="[select.year==item.year&&select.month==item.month&&select.day==item.day&&'select',item.month!=month&&'otherMonth']" 
+                @click="handleDay(item)">{{item.day}}</div>
             </div>
         </div>
     </div>
@@ -28,26 +31,27 @@ export default {
             weekList: [ '日' , '一','二','三','四','五','六'],
             year: null,
             month: null,
-            day: null,
+            day: null, 
             select: dateUtil(new Date()),
             MonthList: [
-                            'Jan',
-                            'Feb',
-                            'Mar',
-                            'Apr',
-                            'May',
-                            'Jun',
-                            'Jul',
-                            'Aug',
-                            'Sept',
-                            'Oct',
-                            'Nov',
-                            'Dec'
+                            '1',
+                            '2',
+                            '3',
+                            '4',
+                            '5',
+                            '6',
+                            '7',
+                            '8',
+                            '9',
+                            '10',
+                            '11',
+                            '12'
                         ]
         }
     },
     props: {
-        date: null
+        date: null,
+        range: false
     },
     watch: {
         today(val) {
@@ -61,6 +65,10 @@ export default {
             this.year = dateUtil().year
             this.month = dateUtil().month
             this.day = dateUtil().day
+        }else {
+            this.year = this.date.year
+            this.month = this.date.month
+            this.day = this.date.day
         }
         // console.log('999', this.today)
         // console.log(new Date().getFullYear())
@@ -133,7 +141,10 @@ export default {
             this.select = dateUtil(`${data.year}, ${data.month}, ${data.day}`)
             this.month = data.month
             this.year = data.year
-            console.log('select', this.select)
+            this.$emit('select', this.select)
+        },
+        handleYear(val) {
+            this.year+=val
         }
     }
 }
@@ -142,12 +153,20 @@ export default {
 <style lang="scss" scoped>
 .zcalenda {
     width: 100%;
+    padding: 20px 0;
+    .iconfont {
+        &:hover {
+            cursor: pointer;
+            color: #409eff;
+        }
+    }
     .pick {
         display: flex;
         align-items: center;
         justify-content: center;
     }
     .head {
+        margin-top: 10px;
         display: flex;
         .week {
             flex: 1;
@@ -165,16 +184,31 @@ export default {
             justify-content: center;
             align-items: center;
             height: 40px;
-        }
-        .select {
-            background: red;
-            border-radius: 25px;
-            width: 25px;
-            height: 25px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: background .3s linear;
+            font-size: 14px;
+            .item {
+                width: 25px;
+                height: 25px;
+                color: #2a303e;
+                text-align: center;
+                line-height: 25px;
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+            .otherMonth {
+                color: #8897aa;
+            }
+            .select {
+                background: #409eff;
+                color: #ffffff;
+                border-radius: 25px;
+                width: 25px;
+                height: 25px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transition: background .3s linear;
+            }
         }
     }
 }

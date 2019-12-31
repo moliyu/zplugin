@@ -20,6 +20,13 @@
       "unicode_decimal": 59017
     },
     {
+      "icon_id": "7071950",
+      "name": "double right",
+      "font_class": "doubleright",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
       "icon_id": "7097506",
       "name": "Selection Control - ",
       "font_class": "select",
@@ -32,6 +39,13 @@
       "font_class": "prev",
       "unicode": "e608",
       "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "9218219",
+      "name": "double left",
+      "font_class": "doubleleft",
+      "unicode": "e6e0",
+      "unicode_decimal": 59104
     },
     {
       "icon_id": "11474197",

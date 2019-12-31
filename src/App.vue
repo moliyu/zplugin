@@ -22,15 +22,15 @@
           {{row.body.data}}
         </template>
     </ztable>
-    <!-- <zcalenda></zcalenda> -->
-    <div id="wave" class="wave" ref="wave"></div>
+    <zcalenda :date="{year:2018,month:7,day:1}" @select="select"></zcalenda>
+    <!-- <div id="wave" class="wave" ref="wave"></div>
     <div id="timeline"></div>
     <div class="play">
       <zbutton @click.native="playaudio">播放</zbutton>
       <zbutton @click.native="pauseaudio">暂停</zbutton>
       <zbutton @click.native="stopaudio">停止</zbutton> 
       <zbutton @click.native="deleteregion">删除</zbutton> 
-    </div>
+    </div> -->
     <zbutton @click.native="show1=!show1">yi</zbutton>
     <zcollapse>
      <div v-if="show1" style="padding: 10px; background: red">
@@ -65,9 +65,9 @@ import zprogress from '@/plugins/zprogress/zprogress'
 import ztable from '@/plugins/ztable/ztable'
 import {getdata} from "@/plugins/ztable/test"
 import zcalenda from './plugins/zcalenda/zcalenda'
-import WaveSurfer from 'wavesurfer.js'
-import RegionsPlugin from 'wavesurfer.js/src/plugin/regions'
-import timelineplugin from 'wavesurfer.js/dist/plugin/wavesurfer.timeline.js'
+// import WaveSurfer from 'wavesurfer.js'
+// import RegionsPlugin from 'wavesurfer.js/src/plugin/regions'
+// import timelineplugin from 'wavesurfer.js/dist/plugin/wavesurfer.timeline.js'
 import {pmctowav} from './utils'
 import axios from 'axios'
 import zcollapse from './plugins/zcollapse/zcollapse.js'
@@ -115,73 +115,68 @@ export default {
       console.log('iiii', data)
       this.list = data
     })
-    axios.get('http://localhost:8000/hello.pcm', {responseType: 'arraybuffer'}).then(data=> {
-      console.log('777', data)
-      // this.file = new Blob([data.data])
-      // this.file = data.data
-      // this.file = 
-      let d = pmctowav(data.data,16000, 16, 2)
-      var blob = new Blob([d], {type: 'audio/wave'})
-      var src = URL.createObjectURL(blob)
-      console.log(src, blob)
-      this.waveSurfer.load(src)
-    })
-    var timer = setInterval(() => {
-      if(this.per>=100) {
-        this.per=0
-        clearInterval(timer) 
-        }else {
+    // axios.get('http://localhost:8000/hello.pcm', {responseType: 'arraybuffer'}).then(data=> {
+    //   console.log('777', data)
+    //   // this.file = new Blob([data.data])
+    //   // this.file = data.data
+    //   // this.file = 
+    //   let d = pmctowav(data.data,16000, 16, 2)
+    //   var blob = new Blob([d], {type: 'audio/wave'})
+    //   var src = URL.createObjectURL(blob)
+    //   console.log(src, blob)
+    //   this.waveSurfer.load(src)
+    // })
+    // var timer = setInterval(() => {
+    //   if(this.per>=100) {
+    //     this.per=0
+    //     clearInterval(timer) 
+    //     }else {
 
-          // console.log(this.per)
-          this.per+=9
-        }
+    //       // console.log(this.per)
+    //       this.per+=9
+    //     }
       
-    }, 200);
+    // }, 200);
   },
-  mounted() {
-    this.$nextTick(() => {
-      this.waveSurfer = WaveSurfer.create({
-        container: '#wave',
-        splitChannels: true,
-        plugins: [RegionsPlugin.create(
-          {
-            regions: this.regionsList,
-            dragSelection: {
-                slop: 5
-            }
-          }
-        ),
-        timelineplugin.create({
-          container: '#timeline'
-        })
-        ]
-      })
-      this.waveSurfer.on('ready', () => {
-        console.log('canplay')
-      })
+  // mounted() {
+  //   this.$nextTick(() => {
+  //     this.waveSurfer = WaveSurfer.create({
+  //       container: '#wave',
+  //       splitChannels: true,
+  //       plugins: [RegionsPlugin.create(
+  //         {
+  //           regions: this.regionsList,
+  //           dragSelection: {
+  //               slop: 5
+  //           }
+  //         }
+  //       ),
+  //       timelineplugin.create({
+  //         container: '#timeline'
+  //       })
+  //       ]
+  //     })
+  //     this.waveSurfer.on('ready', () => {
+  //       console.log('canplay')
+  //     })
       
-      this.waveSurfer.on('region-created', (val) => {
-        console.log('hhhhhh',val)
-        val.color = 'rgba('+[~~(Math.random()*255),~~(Math.random()*255),~~(Math.random()*255)]+",0.5)"
-        this.regionsList.push(val)
-      })
-      this.waveSurfer.on('region-click', (val,e)=> {
-        this.region = val
-        console.log('8888', val.start, val.end, this.waveSurfer.getCurrentTime())
-        console.log(e.shiftKey)
-        // this.waveSurfer.play(val)
-        console.log('999', e, this.regionsList)
-        e.stopPropagation();
-        // e.srcElement.title="你好世界"
-        val.play()
-      })
-    })
-  },
-  computed: {
-    player() {
-      return this.$refs.audio.waveSurfer
-    }
-  },
+  //     this.waveSurfer.on('region-created', (val) => {
+  //       console.log('hhhhhh',val)
+  //       val.color = 'rgba('+[~~(Math.random()*255),~~(Math.random()*255),~~(Math.random()*255)]+",0.5)"
+  //       this.regionsList.push(val)
+  //     })
+  //     this.waveSurfer.on('region-click', (val,e)=> {
+  //       this.region = val
+  //       console.log('8888', val.start, val.end, this.waveSurfer.getCurrentTime())
+  //       console.log(e.shiftKey)
+  //       // this.waveSurfer.play(val)
+  //       console.log('999', e, this.regionsList)
+  //       e.stopPropagation();
+  //       // e.srcElement.title="你好世界"
+  //       val.play()
+  //     })
+  //   })
+  // },
   methods: {
     getList(val) {
       // console.log(val,8888)
@@ -206,6 +201,9 @@ export default {
     },
     deleteregion() {
       this.region.remove()
+    },
+    select(val) {
+      console.log('sss', val)
     }
   }
 }
