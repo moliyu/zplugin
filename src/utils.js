@@ -33,6 +33,10 @@ export const dateUtil = (time) => {
     return {year, month, day}
 }
 
+export const toDate = (val) => {
+  return new Date(val.year, val.month+1, val.day)
+}
+
 export const pmctowav = (samples, sampleRateTmp, sampleBits, channelCount) => {
   let dataLength = samples.byteLength
   /* 新的buffer类，预留 44 bytes 的　heaer 空间 */

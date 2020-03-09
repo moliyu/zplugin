@@ -22,7 +22,7 @@
           {{row.body.data}}
         </template>
     </ztable>
-    <zcalenda :date="{year:2018,month:7,day:1}" @select="select"></zcalenda>
+    <zcalenda :date="{year: 2020, month: 6, day: 20}" style="width: 300px;border: 1px solid" :range="true" @select="select" ></zcalenda>
     <!-- <div id="wave" class="wave" ref="wave"></div>
     <div id="timeline"></div>
     <div class="play">
@@ -33,8 +33,11 @@
     </div> -->
     <zbutton @click.native="show1=!show1">yi</zbutton>
     <zcollapse>
-     <div v-if="show1" style="padding: 10px; background: red">
-      abcd 
+     <div v-if="show1" style="padding: 10px; background: red; padding: 20px">
+       <div>dog</div>
+       <div>dog</div>
+       <div>dog</div>
+       <div>dog</div>
       
     </div> 
   </zcollapse>
@@ -112,7 +115,7 @@ export default {
   },
   created() {
     getdata().then(data => { 
-      console.log('iiii', data)
+      // console.log('iiii', data)
       this.list = data
     })
     // axios.get('http://localhost:8000/hello.pcm', {responseType: 'arraybuffer'}).then(data=> {

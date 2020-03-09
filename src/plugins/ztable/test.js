@@ -3,7 +3,7 @@ export const getdata = () => {
         function(resolve, reject) {
             if(true) {
                 let data= [
-                    { value: 'a的数据',name: 'a', cat:false},
+                    { value: '1111111111111111111111111111111111',name: 'a', cat:false},
                     { value: 'b的数据',name: 'b', cat: false}
                   ]
                 resolve(data)

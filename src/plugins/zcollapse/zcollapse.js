@@ -20,7 +20,7 @@ const Transition = {
             el.style.height = el.dataset.height
         }else {
             el.style.height = el.scrollHeight  + stringToNum(el.dataset.paddingtop) + stringToNum(el.dataset.paddingbottom) + 'px'
-            console.log('***', stringToNum(el.dataset.paddingtop))
+            // console.log('***', stringToNum(el.dataset.paddingtop))
         }
         el.style.paddingTop = el.dataset.paddingtop
         el.style.paddingBottom = el.dataset.paddingbottom

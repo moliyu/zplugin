@@ -11,7 +11,6 @@ export default {
     methods: {
       //根据子元素的高度 设置代码区域父元素的高度
       showCode (index) {
-          console.log('pppp', index)
         this.$set(this.isShow, index, !this.isShow[index])
         this.$nextTick(() => {
           if (this.isShow[index] === true) {

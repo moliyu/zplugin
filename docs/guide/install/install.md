@@ -8,5 +8,5 @@ pageClass: custom-page-class
 <highlight-code lang="javascript" class="code">
 import zplugin from 'zplugin'
 import 'zplugin/src/icon/iconfont.css'
-Vue.use('zplugin')
+Vue.use(zplugin)
 </highlight-code>

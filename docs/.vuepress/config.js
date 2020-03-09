@@ -28,6 +28,7 @@ module.exports = {
                     ['./guide/table/table','table'],
                     ['./guide/collapse/collapse','collapse'],
                     ['./guide/progress/progress','进度条'],
+                    ['./guide/calendar/calendar','日历'],
                 ],
             },
             

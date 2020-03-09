@@ -9,49 +9,74 @@
             <!-- {{getFirstdayWeek()}} -->
         </div>
         <div class="head">
-            <div class="week" v-for="(item, i) in weekList" :key="i">{{item}}</div>
+            <div class="week" v-for="(item, i) in weekList" :key="i" :style="{...weekStyle}">{{item}}</div>
         </div>
         <div class="body">
             <div class="day" 
             v-for="(item, j) in dayList" :key="j" 
             >
                 <div class="item" 
-                :class="[select.year==item.year&&select.month==item.month&&select.day==item.day&&'select',item.month!=month&&'otherMonth']" 
-                @click="handleDay(item)">{{item.day}}</div>
+                :style="{
+                    color: otherMonth(item)&&otherColor||(selectDay(item)||range&&startOrEnd(item))&&chooseTextColor||range&&between(item)&&item.month==month&&'#aaaaaa'||color,
+                    background: range&&startOrEnd(item)&&chooseColor||range&&between(item)&&item.month==month&&'#eeeeee'||selectDay(item)&&chooseColor||'',
+                    ...dayStyle,
+                     }"
+                @click="handleDay(item)"
+                @mouseenter="getRange(item, j)"
+                >{{item.day}}</div>
             </div>
         </div>
     </div>
 </template>
 
 <script> 
-import {dateUtil} from '../../utils'
+import {dateUtil, toDate} from '../../utils'
 export default {
+    name: 'zcalendar',
     data() {
         return {
             weekList: [ '日' , '一','二','三','四','五','六'],
             year: null,
             month: null,
             day: null, 
-            select: dateUtil(new Date()),
+            select: {year: null, month: null, day: null},
             MonthList: [
-                            '1',
-                            '2',
-                            '3',
-                            '4',
-                            '5',
-                            '6',
-                            '7',
-                            '8',
-                            '9',
-                            '10',
-                            '11',
-                            '12'
-                        ]
+                        '1',
+                        '2',
+                        '3',
+                        '4',
+                        '5',
+                        '6',
+                        '7',
+                        '8',
+                        '9',
+                        '10',
+                        '11',
+                        '12'
+                        ],
+            timeRange: {start: '', end: ''},
+            rangeChoose: false
         }
     },
     props: {
         date: null,
-        range: false
+        range: {
+            default: false
+        },
+        weekStyle: {},
+        dayStyle: {},
+        color: {
+            default: '#2a303e',
+        },
+        otherColor: {
+            default: '#8897aa',
+        },
+        chooseColor: {
+            default: '#409eff',
+        },
+        chooseTextColor: {
+            default: '#ffffff'
+        }
     },
     watch: {
         today(val) {
@@ -61,20 +86,26 @@ export default {
         }
     },
     created() {
-        if(!this.date) {
+        if(this.range) {
+            this.year = dateUtil().year
+            this.month = dateUtil().month
+        }else if(!this.date) {
             this.year = dateUtil().year
             this.month = dateUtil().month
             this.day = dateUtil().day
+            this.select = dateUtil(new Date())
         }else {
-            this.year = this.date.year
-            this.month = this.date.month
-            this.day = this.date.day
+            let date
+            if((this.date instanceof Object)&&(!(this.date instanceof Array))) {
+                date = this.date
+            }else {
+                date = dateUtil(new Date())    
+            }
+            this.year = date.year
+            this.month = date.month
+            this.day = date.day
+            this.select = date
         }
-        // console.log('999', this.today)
-        // console.log(new Date().getFullYear())
-        // this.year = new Date().getFullYear()
-        // this.month = new Date().getMonth() + 1
-        // this.day = new Date().getDate()
     },
     computed: {
         dayList() {
@@ -99,7 +130,7 @@ export default {
                 afterday.push(Object.assign({}, after, {day: k}))
             }
             return forday.concat(day).concat(afterday)
-        }
+        },
     },
     methods: {
         getFirstdayWeek() {
@@ -138,13 +169,79 @@ export default {
             }
         },
         handleDay(data) {
-            this.select = dateUtil(`${data.year}, ${data.month}, ${data.day}`)
             this.month = data.month
             this.year = data.year
-            this.$emit('select', this.select)
+            if(this.range) {
+                if(!this.rangeChoose) {
+                    this.rangeChoose = true
+                    this.timeRange.end = null
+                    this.timeRange.start = data
+                }else {
+                    this.rangeChoose = false
+                    this.timeRange.end = data
+                    if(toDate(this.timeRange.end)<toDate(this.timeRange.start)) {
+                        [this.timeRange.start, this.timeRange.end] = [this.timeRange.end, this.timeRange.start]
+                    }
+                    this.$emit('select', this.timeRange)
+
+                }
+            }else {
+                this.select = dateUtil(`${data.year}, ${data.month}, ${data.day}`)
+                this.$emit('select', this.select)
+            }
         },
         handleYear(val) {
             this.year+=val
+        },
+        otherMonth(item) {
+            return item.month!=this.month
+        },
+        selectDay(item) {
+            return this.select.year==item.year&&this.select.month==item.month&&this.select.day==item.day
+        },
+        getRange(item, index) {
+            if(this.rangeChoose) {
+                this.timeRange.end = item
+            }
+        },
+        startOrEnd(item) {
+            if(this.equals(item, this.timeRange.start)||this.equals(item, this.timeRange.end)) {
+                return true
+            }else {
+                return false
+            }
+        },
+        between(item) {
+            if(this.timeRange.start&&this.timeRange.end) {
+                if(this.timeRange.start&&this.timeRange.end&&toDate(item)<toDate(this.timeRange.start)&&toDate(item)<toDate(this.timeRange.end)||toDate(item)>toDate(this.timeRange.start)&&toDate(item)>toDate(this.timeRange.end)) {
+                    return false
+                }else {
+                    return true
+                }
+            }
+        },
+        equals(x, y) {
+            var f1 = x instanceof Object;
+            var f2 = y instanceof Object;
+            if (!f1 || !f2) {
+                return x === y
+            }
+            if (Object.keys(x).length !== Object.keys(y).length) {
+                return false
+            }
+            var newX = Object.keys(x);
+            for (var p in newX) {
+                p = newX[p];
+                var a = x[p] instanceof Object;
+                var b = y[p] instanceof Object;
+                if (a && b) {
+                    equals(x[p], y[p])
+                } else if (x[p] != y[p]) {
+                    return false;
+                }
+            }
+            return true;
+
         }
     }
 }
@@ -164,6 +261,7 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
+        margin-bottom: 10px;
     }
     .head {
         margin-top: 10px;
@@ -178,6 +276,7 @@ export default {
     .body {
         display: flex;
         flex-wrap: wrap;
+        cursor: pointer;
         .day {
             width: 1/7*100%;
             display: flex;
@@ -189,11 +288,10 @@ export default {
                 width: 25px;
                 height: 25px;
                 color: #2a303e;
-                text-align: center;
-                line-height: 25px;
-                &:hover {
-                    cursor: pointer;
-                }
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 25px;
             }
             .otherMonth {
                 color: #8897aa;

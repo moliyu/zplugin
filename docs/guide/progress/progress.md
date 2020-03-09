@@ -30,6 +30,7 @@ export default {
                 {params: 'bg', detail: '进度条背景色', type: 'string', choose: '-', default: '#D8DEDC'},
                 {params: 'perbg', detail: '百分比背景色', type: 'string', choose: '-', default: '#33AE81'},
                 {params: 'h', detail: '进度条高度', type: 'Number/string', choose: '-', default: '8'},
+                {params: 'play', detail: '进度条100到0的时候不会有动画（播放器进度条）', type: 'Boolean', choose: '-', default: 'false'},
             ]
         }
     }

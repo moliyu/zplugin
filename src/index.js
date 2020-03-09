@@ -3,13 +3,15 @@ import zswitch from './plugins/zswitch/index'
 import ztable from './plugins/ztable/index'
 import zprogress from './plugins/zprogress/index'
 import zcollapse from './plugins/zcollapse/index'
+import zcalendar from './plugins/zcalenda/index'
 
 const components = [
     zbutton,
     zswitch,
     ztable,
     zprogress,
-    zcollapse
+    zcollapse,
+    zcalendar
 ];
 
 const install = function (Vue, opts = {}) {
@@ -34,5 +36,6 @@ export default {
     zswitch,
     ztable,
     zprogress,
-    zcollapse
+    zcollapse,
+    zcalendar
 };

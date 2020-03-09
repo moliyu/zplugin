@@ -152,22 +152,18 @@ table {
     .right {text-align: end}
     th {
         background: #F2F6FC;
-        // border: 1px solid;
         text-align: left;
         padding: 10px;
         white-space: nowrap;
-        // border-right: 1px solid #E0E2E6;
         &:last-child {
             border-right: none;
         }
     }
     td {
+        word-break: break-all;
         text-align: left;
-        // border: 1px solid #E0E2E6;
         border-bottom: 1px solid #ebeef5;
         padding: 10px;
-        word-break: break-all;
-        // border: 1px solid
     }
 }
 .nodata {
