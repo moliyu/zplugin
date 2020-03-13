@@ -9,4 +9,4 @@
 <zswitch></zswitch>
 
 ## 文档正在完善中，后续一并给出 
-<a href="http://ainspire.qdreamer.com:7000">文档地址</a>
+<a href="https://moliyu.github.io/zplugin/">文档地址</a>

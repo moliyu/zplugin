@@ -1,4 +1,5 @@
 module.exports = {
+    base:'/zplugin/',
     title: 'zplugin',
     description: '一款轻便好使的个人ui框架',
     themeConfig: {
