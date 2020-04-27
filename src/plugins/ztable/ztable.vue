@@ -4,7 +4,7 @@
             <tr>
                 <th v-for="(item, index) in header" :class="{center:!Object.is(center, undefind),right: !Object.is(right, undefind)}" :key="index" :style="{width: widthList&&widthList[index],border:border&&`1px solid #E0E2E6`,...rowStyle}">
                     <slot :name="item.name" :header="{data:item,rowIndex: index}">
-                        <div v-if="item.prop=='select'"><i class="iconfont" :class="selectAll?'icon-select':'icon-unselect'" @click.prevent="chooseAll"></i></div>
+                        <div v-if="item.prop=='select'"><i class="iconfont" :class="chooseList.length==dataList.length?'icon-select':'icon-unselect'" @click.prevent="chooseAll"></i></div>
                         <div v-else>{{item.name}}</div>
                     </slot>
                 </th>
@@ -12,7 +12,7 @@
             <tr v-for="(body, i) in dataList" :key="i" @mouseenter="enter(i)" :style="`background: ${i==active&&hover||zebra&&i%2==0&&zebra[0]||zebra&&i%2==1&&zebra[1]||''}`" @mouseleave="leave()">
                 <td v-for="(data, index) in header" :key="index" :class="{center:!Object.is(center, undefind),right: !Object.is(right, undefind)}" :style="{border:border&&`1px solid #E0E2E6`,...cellStyle}">
                         <slot :name="data.prop" :body="{data: body,cellIndex: i, rowIndex: index}">
-                            <div v-if="data.prop=='select'"><i class="iconfont" :class="body.select?'icon-select':'icon-unselect'" @click.prevent="choose(body,i)"></i></div>
+                            <div v-if="data.prop=='select'"><i class="iconfont" :class="chooseList.includes(body)?'icon-select':'icon-unselect'" @click.prevent="choose(body,i)"></i></div>
                             <div v-else>{{body[data.prop]}}</div>
                         </slot>
                 </td>
@@ -52,8 +52,8 @@ export default {
         return {
             active: -1,
             undefind: undefined,
-            selectAll: false
-            // isSelect: false
+            selectAll: false,
+            chooseList: []
         }
     },
     watch: {
@@ -64,14 +64,6 @@ export default {
                 this.header.shift()
             }
         },
-        dataList(val) {
-            if(val) {
-                this.dataList.map((item,i) => {
-                    item = this.$set(item, 'select', false)
-                    // return item
-                })
-            }
-        }
     },
     methods: {
         enter(i) {
@@ -82,39 +74,32 @@ export default {
             this.active = -1
         },
         choose(data, i) {
-            if(this.select) {
-                // console.log('单机', data)
-                data.select = !data.select
-                let find = this.dataList.findIndex(item => item.select == false)
-                if(find == -1) {
-                    this.selectAll = true
-                }else {
-                    this.selectAll = false
-                }
+            // if(this.select) {
+            //     data.select = !data.select
+            //     let find = this.dataList.findIndex(item => item.select == false)
+            //     if(find == -1) {
+            //         this.selectAll = true
+            //     }else {
+            //         this.selectAll = false
+            //     }
+            // }
+            // let list = []
+            // list = this.dataList.filter(item => item.select == true)
+            // this.$emit('chooseList', list)
+            if (this.chooseList.includes(data)) {
+                this.chooseList = this.chooseList.filter(item => item!== data)
+            } else {
+                this.chooseList.push(data)
             }
-            let list = []
-            list = this.dataList.filter(item => item.select == true)
-            this.$emit('chooseList', list)
+            this.$emit('chooseList', this.chooseList)
         },
         chooseAll() {
-            if(this.select) {
-                // console.log('全选')
-                let find = this.dataList.findIndex(item => item.select == false)
-                this.dataList.map(item => {
-                    if(find == -1) {
-                        item.select = false
-                        this.selectAll = false
-                    }else {
-                        item.select = true
-                        this.selectAll = true
-                    }
-                })
-                if(this.selectAll) {
-                    this.$emit('chooseList', this.dataList)
-                }else {
-                    this.$emit('chooseList', [])
-                }
+            if (this.chooseList.length > 0) {
+                this.chooseList = []
+            } else {
+                this.chooseList = this.dataList
             }
+            this.$emit('chooseList', this.chooseList)
         }
     },
     created() {
@@ -126,10 +111,10 @@ export default {
             //     this.$set(item, 'select', false)
             // })
         }
-        this.dataList.map((item,i) => {
-            item = this.$set(item, 'select', false)
-            // return item
-        })
+        // this.dataList.map((item,i) => {
+        //     item = this.$set(item, 'select', false)
+        //     // return item
+        // })
     }
 }
 </script>
