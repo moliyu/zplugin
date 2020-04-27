@@ -1,7 +1,7 @@
 {
   "name": "zplugin",
-  "description": "zzy components增加日期挂件",
-  "version": "1.1.10",
+  "description": "增加table宽度自定义方式",
+  "version": "1.1.12",
   "author": "zeyu.zhang <951028382@qq.com>",
   "mail": "951028382@qq.com",
   "license": "MIT",

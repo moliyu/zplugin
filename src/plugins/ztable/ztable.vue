@@ -2,7 +2,7 @@
     <div class="ztable">
         <table class="table" :style="`font-size: ${f}px;color: ${fcolor}`">
             <tr>
-                <th v-for="(item, index) in header" :class="{center:!Object.is(center, undefind),right: !Object.is(right, undefind)}" :key="index" :style="{width: widthList&&widthList[index],border:border&&`1px solid #E0E2E6`,...rowStyle}">
+                <th v-for="(item, index) in header" :class="{center:!Object.is(center, undefind),right: !Object.is(right, undefind)}" :key="index" :style="{width: item.width&&item.width||widthList&&widthList[index],border:border&&`1px solid #E0E2E6`,...rowStyle}">
                     <slot :name="item.name" :header="{data:item,rowIndex: index}">
                         <div v-if="item.prop=='select'"><i class="iconfont" :class="chooseList.length==dataList.length?'icon-select':'icon-unselect'" @click.prevent="chooseAll"></i></div>
                         <div v-else>{{item.name}}</div>

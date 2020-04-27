@@ -21,6 +21,9 @@
         <template v-slot:name="row">
           {{row.body.data}}
         </template>
+        <div slot="表头">
+          1234
+        </div>
     </ztable>
     <zcalenda :date="{year: 2020, month: 6, day: 20}" style="width: 300px;border: 1px solid" :range="true" @select="select" ></zcalenda>
     <!-- <div id="wave" class="wave" ref="wave"></div>
@@ -98,7 +101,7 @@ export default {
       toggle: true,
       per: 0,
       header: [
-        {prop:'name', name: '姓名'},
+        {prop:'name', name: '姓名', width: '100px'},
         {prop:'value', name: '数据'},
         {prop:'cat', name: '表头'}
       ],

@@ -62,7 +62,11 @@ export default {
 export default {
     data() {
         return {
-            header: [{prop:'name', name: '姓名'},{prop:'value', name: '数据'},{prop:'sex', name: '表头'}]
+            header: [
+                {prop:'name', name: '姓名'},
+                {prop:'value', name: '数据'},
+                {prop:'sex', name: '表头', width: '100px'}
+            ],
             list: [
                 {name: '张三', value: '张三的数据', sex:'男'},
                 {name: '王五', value: '王五的数据', sex: '男'},

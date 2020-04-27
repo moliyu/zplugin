@@ -21,7 +21,7 @@ export default {
             header: [
                 {prop:'name', name: '姓名'},
                 {prop:'value', name: '数据'},
-                {prop:'sex', name: '性别'}
+                {prop:'sex', name: '性别', width: '100px'}
             ],
             list: [
                 {name: '张三', value: '张三的数据', sex:'男'},

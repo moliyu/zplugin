@@ -1,12 +1,14 @@
 # 自己封装的ui组件库
-## 使用方法
-### npm install zplugin
-### import zplugin from 'zplugin'
-### Vue.use(zplugin)
+**使用方法**
 
-## example
-<zbutton>按钮文字</zbutton>
-<zswitch></zswitch>
+~~~js
+npm install zplugin
 
-## 文档正在完善中，后续一并给出 
+import Vue from 'vue'
+import zplugin from 'zplugin'
+import 'zplugin/src/icon/iconfont.css'
+Vue.use(zplugin)
+~~~
+
+
 <a href="https://moliyu.github.io/zplugin/">文档地址</a>
