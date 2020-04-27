@@ -89,6 +89,7 @@ export default {
         return {
             list: [
                 {params: 'widthList', detail: '如["200px","200px","300px"],设置每列宽度,支持百分比', type: 'Array', choose: '-', default: '-'},
+                {params: 'selectWidth', detail: '选择框宽度', type: 'string', choose: '-', default: '-'},
                 {params: 'hover', detail: '鼠标悬浮颜色', type: 'string', choose: '-', default: '#F2F6FC90'},
                 {params: 'header', detail: '表头信息', type: 'Array', choose: '-', default: '-'},
                 {params: 'select', detail: '使表格变为选择状态', type: 'boolean', choose: 'true/false', default: 'false'},
@@ -132,6 +133,6 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 
 </style>

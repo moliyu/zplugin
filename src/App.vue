@@ -14,7 +14,7 @@
         </template>
     </ztable> -->
     <zprogress :per="per" bg="red" perbg="green" :play="true" style="width: 200px" h=30></zprogress>
-    <ztable :header="header" :dataList="list" style="marginTop: 20px;" :trStyle="{border: '1px solid'}" center :cellStyle="{color: 'green'}" :select="toggle" :widthList="['30%','','10%']" @chooseList="chooseList">
+    <ztable :header="header" :dataList="list" style="marginTop: 20px;" :trStyle="{border: '1px solid'}" center :cellStyle="{color: 'green'}" :select="toggle" selectWidth="20px" @chooseList="chooseList">
         <template v-slot:姓名="row">
             {{row.header.data.name}}
         </template>

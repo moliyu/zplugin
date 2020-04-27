@@ -1,5 +1,5 @@
 ---
-title: switch
+title: 进度条
 pageClass: custom-page-class
 ---
 <clientOnly>
