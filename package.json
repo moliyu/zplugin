@@ -36,7 +36,7 @@
     "highlight.js": "^9.12.0",
     "install": "^0.13.0",
     "node-sass": "^4.13.0",
-    "npm": "^6.13.0",
+    "npm": "^9.4.1",
     "sass": "^1.23.3",
     "sass-loader": "^7.3.1",
     "vue-highlight.js": "^2.2.0",
